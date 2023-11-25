@@ -1,19 +1,19 @@
 
 [Unit]
-Description=defli-mlat
+Description=defliteam-mlat
 Wants=network.target
 After=network.target
 
 [Service]
-User=defli
-RuntimeDirectory=defli-mlat
-ExecStart=/usr/local/share/defliteam/defli-mlat.sh
+User=defliteam
+RuntimeDirectory=defliteam-mlat
+ExecStart=/usr/local/share/defliteam/defliteam-mlat.sh
 Type=simple
 Restart=always
 RestartSec=30
 StartLimitInterval=1
 StartLimitBurst=100
-SyslogIdentifier=defli-mlat
+SyslogIdentifier=defliteam-mlat
 Nice=-1
 
 [Install]
