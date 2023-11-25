@@ -29,8 +29,8 @@
 
 set -e
 
-IPATH="https://github.com/defliteam/client-feeder" 
-BRANCH="main"
+IPATH=/usr/local/share/defli 
+
 
 ## we need to install stuff that require root, check for that
 if [ "$(id -u)" != "0" ]; then
@@ -56,10 +56,10 @@ if [ -f /boot/defli-config.txt ]; then
     exit 1
 fi
 
-bash "$IPATH/configure.sh"
+bash "$IPATH/git/configure.sh"
 
 whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" --yesno "We are now ready to begin setting up your receiver to feed defli.\n\nDo you wish to proceed?" 9 78 || exit 1
 
-bash "$IPATH/update.sh"
+bash "$IPATH/git/update.sh"
 
 exit 0
