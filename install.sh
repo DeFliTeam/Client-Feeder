@@ -3,7 +3,7 @@ set -e
 
 REPO="https://github.com/defliteam/client-feeder.git"
 BRANCH="master"
-IPATH=/usr/local/share/defliteam
+IPATH="https://github.com/defliteam/client-feeder"
 mkdir -p $IPATH
 
 if [ "$(id -u)" != "0" ]; then
