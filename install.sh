@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-REPO="https://github.com/defliteam/client-feeder.git"
+REPO="https://github.com/defliteam/client-feeder/main"
 BRANCH="master"
-IPATH="https://github.com/defliteam/client-feeder"
+IPATH="https://github.com/defliteam/client-feeder/main"
 mkdir -p $IPATH
 
 if [ "$(id -u)" != "0" ]; then
