@@ -31,7 +31,7 @@ set -e
 trap 'echo "[ERROR] Error in line $LINENO when executing: $BASH_COMMAND"' ERR
 renice 10 $$ &>/dev/null
 
-IPATH=/usr/local/share/defliteam
+IPATH="https://github.com/defliteam/client-feeder"
 
 function abort() {
     echo ------------
