@@ -32,4 +32,4 @@ function getGIT() {
 getGIT "$REPO" "$BRANCH" "$IPATH/git"
 
 cd "$IPATH/git"
-bash "$IPATH/git/setup.sh"
+bash "$IPATH/setup.sh"
