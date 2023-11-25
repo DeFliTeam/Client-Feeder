@@ -55,10 +55,10 @@ if [ -f /boot/defli-config.txt ]; then
     exit 1
 fi
 
-bash "$IPATH/git/configure.sh"
+bash "$IPATH/configure.sh"
 
 whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" --yesno "We are now ready to begin setting up your receiver to feed defli.\n\nDo you wish to proceed?" 9 78 || exit 1
 
-bash "$IPATH/git/update.sh"
+bash "$IPATH/update.sh"
 
 exit 0
