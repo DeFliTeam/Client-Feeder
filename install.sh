@@ -28,7 +28,7 @@ function getGIT() {
     rm -rf "$tmp" "$tmp.folder"; return 1
 }
 
-getGIT "$REPO" "$BRANCH" "$IPATH/git"
+getGIT "$REPO" "$BRANCH" "$IPATH"
 
 cd "$IPATH/"
 bash "$IPATH/setup.sh"
