@@ -29,7 +29,7 @@
 
 set -e
 
-IPATH=/usr/local/share/defli 
+IPATH=/usr/local/share/defliteam
 
 
 ## we need to install stuff that require root, check for that
