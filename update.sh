@@ -98,7 +98,7 @@ function getGIT() {
 REPO="https://github.com/defliteam/client-feed.git"
 BRANCH="master"
 
-IPATH=/usr/local/share/defliteam
+IPATH="https://github.com/defliteam/client-feeder"
 GIT="$IPATH/git"
 mkdir -p $IPATH
 
@@ -230,7 +230,7 @@ else
         echo "--------------------"
         echo "Installing mlat-client failed, if there was an old version it has been restored."
         echo "Will continue installation to try and get at least the feed client working."
-        echo "Please repot this error to the adsblol forums or discord."
+        echo "Please repot this error to the defli forums or discord."
         echo "--------------------"
     fi
 fi
