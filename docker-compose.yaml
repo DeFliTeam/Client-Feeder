@@ -63,8 +63,7 @@ services:
     - LAT=${FEEDER_LAT}
     - LONG=${FEEDER_LONG}
     - ALT=${FEEDER_ALT_M}m
-    - SITENAME=${ADSBX_SITENAME}
-    - UUID=${ADSBX_UUID}
+    - UUID=${GS_UUID}
     - TZ=${FEEDER_TZ}
     - ADSB_FEED_DESTINATION_HOSTNAME=feed.defli.xyz 
     - ADSB_FEED_DESTINATION_PORT=1337
