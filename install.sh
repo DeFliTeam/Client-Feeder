@@ -2,7 +2,6 @@
 set -e
 
 REPO="https://github.com/defliteam/client-feeder/main"
-BRANCH="master"
 IPATH="https://github.com/defliteam/client-feeder/main"
 mkdir -p $IPATH
 
