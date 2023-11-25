@@ -99,7 +99,7 @@ REPO="https://github.com/defliteam/client-feed.git"
 BRANCH="master"
 
 IPATH="https://github.com/defliteam/client-feeder"
-GIT="$IPATH/git"
+GIT="$IPATH/"
 mkdir -p $IPATH
 
 LOGFILE="$IPATH/lastlog"
