@@ -7,7 +7,7 @@ After=network.target
 [Service]
 User=defli
 RuntimeDirectory=defli-feed
-ExecStart=/usr/local/share/defliteam/client-feeder/main/scripts/defli-feed.sh
+ExecStart=/usr/local/share/defli/defli-feed.sh
 Type=simple
 Restart=always
 RestartSec=30
