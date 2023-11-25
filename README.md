@@ -2,9 +2,9 @@
 
 Instructions on how to feed your ADSB / M-LAT data to DeFli 
 
-This is for Raspberry Pi / Ubuntu Installations Only 
+Instructions provided for Raspberry Pi, Ubuntu Installations & Docker. 
 
-For docker installations please vist link 
+For Windows Installations please use VRS and rebroadcast to 34.120.137.41: 30004
 
 # Installation Instructions 
 
