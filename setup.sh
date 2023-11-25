@@ -29,7 +29,8 @@
 
 set -e
 
-IPATH="https://github.com/defliteam/client-feeder/main"
+IPATH="https://github.com/defliteam/client-feeder" 
+BRANCH="main"
 
 ## we need to install stuff that require root, check for that
 if [ "$(id -u)" != "0" ]; then
