@@ -95,10 +95,11 @@ function getGIT() {
     rm -rf "$tmp" "$tmp.folder"; return 1
 }
 
-REPO="https://github.com/defliteam/client-feed/main"
-BRANCH="master"
+REPO="https://github.com/defliteam/client-feeder"
 
-IPATH="https://github.com/defliteam/client-feeder/main"
+
+IPATH="https://github.com/defliteam/client-feeder" 
+Branch="Main"
 GIT="$IPATH/"
 mkdir -p $IPATH
 
