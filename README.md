@@ -8,14 +8,16 @@ For Windows Installations please use VRS and rebroadcast to 34.120.137.41: 30004
 
 # Installation Instructions 
 
-#Install the feeder client 
+**Install the feeder client** 
 
-curl -L -o /tmp/deflifeed.sh https://raw.githubusercontent.com/defliteam/client-feeder/master/install.sh
+curl -L -o /tmp/deflifeed.sh https://raw.githubusercontent.com/defliteam/client-feeder/master/install.sh 
+
 sudo bash /tmp/deflifeed.sh 
 
-#Check it is working 
+**Check it is working** 
 
 $ host feed.defli.xyz
+
 feed.defli.xyz has address 34.120.137.41 
 
 #Expected Output 
