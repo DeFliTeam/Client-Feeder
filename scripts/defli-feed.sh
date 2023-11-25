@@ -1,14 +1,14 @@
 #!/bin/bash
 
-if grep -qs -e 'LATITUDE' /boot/defli-config.txt &>/dev/null && [[ -f /boot/defli-env ]]; then
-    source /boot/defli-config.txt
-    source /boot/defli-env
+if grep -qs -e 'LATITUDE' /boot/defliteam-config.txt &>/dev/null && [[ -f /boot/defliteam-env ]]; then
+    source /boot/defliteam-config.txt
+    source /boot/defliteam-env
 else
     source /etc/default/defliteam
 fi
 
-if ! [[ -d /run/defli-feed/ ]]; then
-    mkdir -p /run/defli-feed
+if ! [[ -d /run/defliteam-feed/ ]]; then
+    mkdir -p /run/defliteam-feed
 fi
 
 if [[ -z $INPUT ]]; then
@@ -28,12 +28,12 @@ UAT_PORT=$(echo $UAT_INPUT | cut -d: -f2)
 UAT_SOURCE="--net-connector $UAT_IP,$UAT_PORT,uat_in,silent_fail"
 
 
-exec /usr/local/share/defliteam/feed-defli --net --net-only --quiet \
-    --write-json /run/defli-feed \
+exec /usr/local/share/defliteam/feed-defliteam --net --net-only --quiet \
+    --write-json /run/defliteam-feed \
     --net-beast-reduce-interval $REDUCE_INTERVAL \
     $TARGET $NET_OPTIONS \
     --lat "$LATITUDE" --lon "$LONGITUDE" \
-    --uuid-file /usr/local/share/defliteam/defli-uuid \
+    --uuid-file /usr/local/share/defliteam/defliteam-uuid \
     $JSON_OPTIONS \
     $UAT_SOURCE \
     $SOURCE
