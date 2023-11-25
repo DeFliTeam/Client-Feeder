@@ -4,7 +4,7 @@ if grep -qs -e 'LATITUDE' /boot/defli-config.txt &>/dev/null && [[ -f /boot/defl
     source /boot/defli-config.txt
     source /boot/defli-env
 else
-    source /etc/default/defli
+    source /etc/default/defliteam
 fi
 
 if ! [[ -d /run/defli-feed/ ]]; then
