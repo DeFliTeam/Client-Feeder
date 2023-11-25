@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-REPO="https://github.com/defliteam/client-feeder.git" 
+REPO="https://github.com/defliteam/client-feeder.git"
 BRANCH="main"
-IPATH="https://github.com/defliteam/client-feeder/main
+IPATH=/usr/local/share/defliteam
 mkdir -p $IPATH
 
 if [ "$(id -u)" != "0" ]; then
@@ -29,7 +29,7 @@ function getGIT() {
     rm -rf "$tmp" "$tmp.folder"; return 1
 }
 
-getGIT "$REPO" "$BRANCH" "$IPATH"
+getGIT "$REPO" "$BRANCH" "$IPATH/git"
 
-cd "$IPATH/"
-bash "$IPATH/setup.sh"
+cd "$IPATH/git"
+bash "$IPATH/git/setup.sh"
