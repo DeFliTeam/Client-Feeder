@@ -1,15 +1,15 @@
 #!/bin/bash
 
 #####################################################################################
-#                        DeFli SETUP SCRIPT                                       #
+#                      DEFLI NETWORKS SETUP SCRIPT                                       #
 #####################################################################################
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                                                   #
-# Copyright (c) 2023 DeFli                                                          #
+# Copyright (c) 2023 DEFLI NETWORKS                                                          #
 #                                                                                   #
 # Permission is hereby granted, free of charge, to any person obtaining a copy      #
 # of this software and associated documentation files (the "Software"), to deal     #
-# in the Software with restriction, including with limitation the rights            #
+# in the Software with restriction, including with limitation the rights      #
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell         #
 # copies of the Software, and to permit persons to whom the Software is             #
 # furnished to do so, subject to the following conditions:                          #
@@ -31,7 +31,6 @@ set -e
 
 IPATH=/usr/local/share/defliteam
 
-
 ## we need to install stuff that require root, check for that
 if [ "$(id -u)" != "0" ]; then
     echo -e "\033[33m"
@@ -40,15 +39,15 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-## REFUSE INSTALLATION ON ADSBX IMAGE
+## REFUSE INSTALLATION ONWINGBITS IMAGE
 
-if [ -f /boot/defli-config.txt ]; then
+if [ -f /boot/defliteam-config.txt ]; then
     echo --------
-    echo "You are using the defli image, the feed setup script does not need to be installed."
+    echo "You are using the DEFLI image, the feed setup script does not need to be installed."
     echo "You should already be feeding."
     echo "If the feed isn't working, check/correct the configuration using nano:"
     echo --------
-    echo "sudo nano /boot/defli-config.txt"
+    echo "sudo nano /boot/defliteam-config.txt"
     echo --------
     echo "Hint for using nano: Ctrl-X to exit, Y(yes) and Enter to save."
     echo --------
@@ -58,7 +57,7 @@ fi
 
 bash "$IPATH/git/configure.sh"
 
-whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" --yesno "We are now ready to begin setting up your receiver to feed defli.\n\nDo you wish to proceed?" 9 78 || exit 1
+whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" --yesno "We are now ready to begin setting up your receiver to feed DEFLI NETWORKSl.\n\nDo you wish to proceed?" 9 78 || exit 1
 
 bash "$IPATH/git/update.sh"
 
