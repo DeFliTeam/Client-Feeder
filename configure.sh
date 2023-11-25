@@ -1,15 +1,15 @@
 #!/bin/bash
 
 #####################################################################################
-#                        feed.defli SETUP SCRIPT                                #
+#                        DEFLI NETWORKS SETUP SCRIPT                             #
 #####################################################################################
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                                                   #
-# Copyright (c) 2023 DeFli                                                          #
+# Copyright (c) 2023 DEFLI NETWORKS                                                         #
 #                                                                                   #
 # Permission is hereby granted, free of charge, to any person obtaining a copy      #
 # of this software and associated documentation files (the "Software"), to deal     #
-# in the Software with restriction, including with limitation the rights            #
+# in the Software with restriction, including with limitation the rights      #
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell         #
 # copies of the Software, and to permit persons to whom the Software is             #
 # furnished to do so, subject to the following conditions:                          #
@@ -33,7 +33,6 @@ renice 10 $$ &>/dev/null
 
 IPATH=/usr/local/share/defliteam
 
-
 function abort() {
     echo ------------
     echo "Setup canceled (probably using Esc button)!"
@@ -44,22 +43,22 @@ function abort() {
 
 ## WHIPTAIL DIALOGS
 
-BACKTITLETEXT="DeFli Networks Setup Script"
+BACKTITLETEXT="DEFLI NETWORKS Setup Script"
 
-whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" --yesno "Thanks for choosing to share your data with defli!\n\ndelfi network uses your data to support infrastructure for unmanned aviation. This script will configure your current ADS-B receiver to share your feeders data with DeFli.\n\nWould you like to continue setup?" 13 78 || abort
+whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" --yesno "Thanks for choosing to share your data with DEFLI NETWORKS!\n\nDEFLI NETWORKS uses your data to support infrastructure for unmanned avaiation. This script will configure your current your ADS-B receiver to share your feeders data with DEFLI.\n\nWould you like to continue setup?" 13 78 || abort
 
-defliUSERNAME=$(whiptail --backtitle "$BACKTITLETEXT" --title "Feeder MLAT Name" --nocancel --inputbox "\nPlease enter your unique name to be shown on the MLAT map (the pin will be offset for privacy)\n\nExample: \"william34-london\", \"william34-jersey\", etc.\nDisable MLAT: enter a zero: 0" 12 78 3>&1 1>&2 2>&3) || abort
+defliUSERNAME=$(whiptail --backtitle "$BACKTITLETEXT" --title "Feeder UUID" --nocancel --inputbox "\nPlease enter your UUID to be shown on the map (the pin will be offset for privacy)\n\nExample: \fjfj8585jgkfeolsdkkg4444998dkf.\nDisable: enter a zero: 0" 12 78 3>&1 1>&2 2>&3) || abort
 
-NOSPACENAME="$(echo -n -e "${defliUSERNAME}" | tr -c '[a-zA-Z0-9]_\- ' '_')"
+NOSPACENAME="$(echo -n -e "${adsblolUSERNAME}" | tr -c '[a-zA-Z0-9]_\- ' '_')"
 
 if [[ "$NOSPACENAME" != 0 ]]; then
     whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" \
-        --msgbox "For MLAT the precise location of your antenna is required.\
-        \n\nA small error of 15m/45ft will cause issues with MLAT!\
+        --msgbox "For the precise location of your antenna is required.\
+        \n\nA small error of 15m/45ft will cause issues with service!\
         \n\nTo get your location, use any online map service or this website: https://www.mapcoordinates.net/en" 12 78 || abort
 else
     whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" \
-        --msgbox "MLAT DISABLED!.\
+        --msgbox " DISABLED!.\
         \n\n For some local functions the approximate receiver location is still useful, it won't be sent to the server." 12 78 || abort
 fi
 
@@ -105,19 +104,19 @@ RECEIVERALTITUDE="$ALT"
 
 
 INPUT="127.0.0.1:30005"
-INPUT_TYPE="tar1090"
+INPUT_TYPE="dump1090"
 
 if [[ $(hostname) == "radarcape" ]] || pgrep rcd &>/dev/null; then
     INPUT="127.0.0.1:10003"
     INPUT_TYPE="radarcape_gps"
 fi
 
-tee /etc/default/defli >/dev/null <<EOF
+tee /etc/default/defliteam >/dev/null <<EOF
 INPUT="$INPUT"
 REDUCE_INTERVAL="0.5"
 
-# feed name for checking MLAT sync
-# also displayed on the MLAT map
+# UUID for checking sync
+# also displayed on the map
 USER="$NOSPACENAME"
 
 LATITUDE="$RECEIVERLATITUDE"
@@ -139,7 +138,7 @@ PRIVACY=""
 INPUT_TYPE="$INPUT_TYPE"
 
 MLATSERVER="feed.defli.xyz:31090"
-TARGET="--net-connector feed.defli.xyz,30004,beast_reduce_plus_out,feed.defli.xyz,1337"
+TARGET="--net-connector feed.defli.xyz,30004,beast_reduce_plus_out "
 NET_OPTIONS="--net-heartbeat 60 --net-ro-size 1280 --net-ro-interval 0.2 --net-ro-port 0 --net-sbs-port 0 --net-bi-port 31421 --net-bo-port 0 --net-ri-port 0 --write-json-every 1"
 JSON_OPTIONS="--max-range 450 --json-location-accuracy 2 --range-outline-hours 24"
-EOF
+EOF 
