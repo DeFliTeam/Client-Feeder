@@ -95,12 +95,12 @@ function getGIT() {
     rm -rf "$tmp" "$tmp.folder"; return 1
 }
 
-REPO="https://github.com/defliteam/client-feeder"
+REPO="https://github.com/defliteam/client-feeder.git" 
+BRANCH="main"
 
 
-IPATH="https://github.com/defliteam/client-feeder" 
-Branch="Main"
-GIT="$IPATH/"
+IPATH=/usr/local/share/defli 
+GIT="$IPATH/git"
 mkdir -p $IPATH
 
 LOGFILE="$IPATH/lastlog"
