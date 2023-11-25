@@ -1,15 +1,15 @@
 #!/bin/bash
 
 #####################################################################################
-#                        DeFli SETUP SCRIPT                                       #
+#                        DEFLI NETWORKS SETUP SCRIPT                                       #
 #####################################################################################
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                                                   #
-# Copyright (c) 2023 DeFli                                                          #
+# Copyright (c) 2023 DEFLI NETWORKS                                                          #
 #                                                                                   #
 # Permission is hereby granted, free of charge, to any person obtaining a copy      #
 # of this software and associated documentation files (the "Software"), to deal     #
-# in the Software with restriction, including with limitation the rights            #
+# in the Software with restriction, including with limitation the rights      #
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell         #
 # copies of the Software, and to permit persons to whom the Software is             #
 # furnished to do so, subject to the following conditions:                          #
@@ -95,11 +95,10 @@ function getGIT() {
     rm -rf "$tmp" "$tmp.folder"; return 1
 }
 
-REPO="https://github.com/defliteam/client-feeder.git" 
+REPO="https://github.com/defliteam/client-feeder.git"
 BRANCH="main"
 
-
-IPATH=/usr/local/share/defli 
+IPATH=/usr/local/share/defliteam
 GIT="$IPATH/git"
 mkdir -p $IPATH
 
@@ -122,13 +121,13 @@ if diff "$GIT/update.sh" "$IPATH/update.sh" &>/dev/null; then
     exit $?
 fi
 
-if [ -f /boot/defli-config.txt ]; then
-    source /boot/defli-config.txt
-    source /boot/defli-env
+if [ -f /boot/defliteam-config.txt ]; then
+    source /boot/defliteam-config.txt
+    source /boot/defliteam-env
 else
-    source /etc/default/defli
-    if ! grep -qs -e UAT_INPUT /etc/default/defli; then
-        cat >> /etc/default/defli <<"EOF"
+    source /etc/default/defliteam
+    if ! grep -qs -e UAT_INPUT /etc/default/defliteam; then
+        cat >> /etc/default/adsblol <<"EOF"
 
 # this is the source for 978 data, use port 30978 from dump978 --raw-port
 # if you're not receiving 978, don't worry about it, not doing any harm!
@@ -153,7 +152,7 @@ fi
 cp "$GIT/uninstall.sh" "$IPATH"
 cp "$GIT"/scripts/*.sh "$IPATH"
 
-UNAME=defli
+UNAME=adsblol
 if ! id -u "${UNAME}" &>/dev/null
 then
     # 2nd syntax is for fedora / centos
@@ -186,84 +185,9 @@ then
 fi
 
 
-MLAT_REPO="https://github.com/defliteam/client-feeder/scripts/mlat-client.git"
-MLAT_BRANCH="master"
-MLAT_VERSION="$(git ls-remote $MLAT_REPO $MLAT_BRANCH | cut -f1 || echo $RANDOM-$RANDOM )"
-if [[ $REINSTALL != yes ]] && grep -e "$MLAT_VERSION" -qs $IPATH/mlat_version \
-    && grep -qs -e '#!' "$VENV/bin/mlat-client" && { systemctl is-active defli-mlat &>/dev/null || [[ "${MLAT_DISABLED}" == "1" ]]; }
-then
-    echo
-    echo "mlat-client already installed, git hash:"
-    cat $IPATH/mlat_version
-    echo
-else
-    echo
-    echo "Installing mlat-client to virtual environment"
-    echo
-    # Check if the mlat-client git repository already exists.
 
-    MLAT_GIT="$IPATH/mlat-client-git"
 
-    # getGIT $REPO $BRANCH $TARGET-DIR
-    getGIT $MLAT_REPO $MLAT_BRANCH $MLAT_GIT &> $LOGFILE
-
-    cd $MLAT_GIT
-
-    echo 34
-
-    rm "$VENV-backup" -rf
-    mv "$VENV" "$VENV-backup" -f &>/dev/null || true
-    if /usr/bin/python3 -m venv $VENV >> $LOGFILE \
-        && echo 36 \
-        && source $VENV/bin/activate >> $LOGFILE \
-        && echo 38 \
-        && python3 setup.py build >> $LOGFILE \
-        && echo 40 \
-        && python3 setup.py install >> $LOGFILE \
-        && echo 46 \
-        && revision > $IPATH/mlat_version || rm -f $IPATH/mlat_version \
-        && echo 48 \
-    ; then
-        rm "$VENV-backup" -rf
-    else
-        rm "$VENV" -rf
-        mv "$VENV-backup" "$VENV" &>/dev/null || true
-        echo "--------------------"
-        echo "Installing mlat-client failed, if there was an old version it has been restored."
-        echo "Will continue installation to try and get at least the feed client working."
-        echo "Please repot this error to the defli forums or discord."
-        echo "--------------------"
-    fi
-fi
-
-echo 50
-
-# copy defli-mlat service file
-cp "$GIT"/scripts/defli-mlat.service /lib/systemd/system
-
-echo 60
-
-if ls -l /etc/systemd/system/defli-mlat.service 2>&1 | grep '/dev/null' &>/dev/null; then
-    echo "--------------------"
-    echo "CAUTION, defli-mlat is masked and won't run!"
-    echo "If this is unexpected for you, please report this issue"
-    echo "--------------------"
-    sleep 3
-else
-    if [[ "${MLAT_DISABLED}" == "1" ]]; then
-        systemctl disable defli-mlat || true
-        systemctl stop defli-mlat || true
-    else
-        # Enable defli-mlat service
-        systemctl enable defli-mlat >> $LOGFILE || true
-        # Start or restart defli-mlat service
-        systemctl restart defli-mlat || true
-    fi
-fi
-
-echo 70
-
-# SETUP FEEDER TO SEND TAR1090 DATA TO DEFLI
+# SETUP FEEDER TO SEND DUMP1090 DATA TO adsb.lol
 
 READSB_REPO="https://github.com/wiedehopf/readsb.git"
 READSB_BRANCH="master"
@@ -271,10 +195,10 @@ if grep -E 'wheezy|jessie' /etc/os-release -qs; then
     READSB_BRANCH="jessie"
 fi
 READSB_VERSION="$(git ls-remote $READSB_REPO $READSB_BRANCH | cut -f1 || echo $RANDOM-$RANDOM )"
-READSB_GIT="$IPATH/readsbdefli-git"
-READSB_BIN="$IPATH/feed-defli"
+READSB_GIT="$IPATH/readsb-git"
+READSB_BIN="$IPATH/feed-defliteam"
 if [[ $REINSTALL != yes ]] && grep -e "$READSB_VERSION" -qs $IPATH/readsb_version \
-    && "$READSB_BIN" -V && systemctl is-active defli-feed &>/dev/null
+    && "$READSB_BIN" -V && systemctl is-active defliteam-feed &>/dev/null
 then
     echo
     echo "Feed client already installed, git hash:"
@@ -307,19 +231,19 @@ fi
 
 #end compile readsb
 
-cp "$GIT"/scripts/defli-feed.service /lib/systemd/system
+cp "$GIT"/scripts/defliteam-feed.service /lib/systemd/system
 
 echo 82
 
-if ! ls -l /etc/systemd/system/defli-feed.service 2>&1 | grep '/dev/null' &>/dev/null; then
-    # Enable defli-feed service
-    systemctl enable defli-feed >> $LOGFILE || true
+if ! ls -l /etc/systemd/system/defliteam-feed.service 2>&1 | grep '/dev/null' &>/dev/null; then
+    # Enable defliteam-feed service
+    systemctl enable defliteam-feed >> $LOGFILE || true
     echo 92
-    # Start or restart defli-feed service
-    systemctl restart defli-feed || true
+    # Start or restart defliteam-feed service
+    systemctl restart defliteam-feed || true
 else
     echo "--------------------"
-    echo "CAUTION, defli-feed.service is masked and won't run!"
+    echo "CAUTION, defliteam-feed.service is masked and won't run!"
     echo "If this is unexpected for you, please report this issue"
     echo "--------------------"
     sleep 3
@@ -327,10 +251,10 @@ fi
 
 echo 94
 
-systemctl is-active defli-feed &>/dev/null || {
+systemctl is-active defliteam-feed &>/dev/null || {
     rm -f $IPATH/readsb_version
     echo "---------------------------------"
-    journalctl -u defli-feed | tail -n10
+    journalctl -u defliteam-feed | tail -n10
     echo "---------------------------------"
     echo "defli-feed service couldn't be started, please report this error to the defli discord."
     echo "Try an copy as much of the output above and include it in your report, thank you!"
@@ -338,21 +262,11 @@ systemctl is-active defli-feed &>/dev/null || {
     exit 1
 }
 
-echo 96
-[[ "${MLAT_DISABLED}" == "1" ]] || systemctl is-active defli-mlat &>/dev/null || {
-    rm -f $IPATH/mlat_version
-    echo "---------------------------------"
-    journalctl -u defli-mlat | tail -n10
-    echo "---------------------------------"
-    echo "defli-mlat service couldn't be started, please report this error to the defli discord."
-    echo "Try an copy as much of the output above and include it in your report, thank you!"
-    echo "---------------------------------"
-    exit 1
-}
+
 
 # Remove old method of starting the feed scripts if present from rc.local
 # Kill the old defli scripts in case they are still running from a previous install including spawned programs
-for name in defli-netcat_maint.sh defli-socat_maint.sh defli-mlat_maint.sh; do
+for name in defliteam-netcat_maint.sh defliteam-socat_maint.sh defliteam-mlat_maint.sh; do
     if grep -qs -e "$name" /etc/rc.local; then
         sed -i -e "/$name/d" /etc/rc.local || true
     fi
@@ -362,13 +276,10 @@ for name in defli-netcat_maint.sh defli-socat_maint.sh defli-mlat_maint.sh; do
     fi
 done
 
-# in case the mlat-client service using /etc/default/mlat-client as config is using defli.xyz as a host, disable the service
-if grep -qs 'SERVER_HOSTPORT.*feed.defli.xyz' /etc/default/mlat-client &>/dev/null; then
-    systemctl disable --now mlat-client >> $LOGFILE 2>&1 || true
-fi
 
-if [[ -f /etc/default/defli ]]; then
-    sed -i -e 's/feed.defli.xyz,30004,beast_reduce_out,feed.defli.xyz,64004/feed.defli.xyz,30004,beast_reduce_out,feed.defli.xyz,64004/' /etc/default/defli || true
+
+if [[ -f /etc/default/defliteam ]]; then
+    sed -i -e 's/feed.defli.xyz,30004,beast_reduce_out,feed.defli.xyz,64004/feed.defli.xyz,30004,beast_reduce_out,feed.defli.xyz,64004/' /etc/default/defliteam || true
 fi
 
 
@@ -379,16 +290,15 @@ echo "---------------------"
 ## SETUP COMPLETE
 
 ENDTEXT="
-Thanks for choosing to share your data with DeFli!
+Thanks for choosing to share your data with DEFLI NETWORK!
 
 Your feed should be active within 5 minutes, you can confirm by running the following command and looking for the IP address 34.120.137.41
 netstat -t -n | grep -E '30004|31090'
 
-Question? Issues? Go here:
-https://discord.gg/BBkdrbn2Jy
+
 
 Webinterface to show the data transmitted? Run this command:
-sudo bash /usr/local/share/defliteam/client-feeder/git/install-or-update-interface.sh
+sudo bash /usr/local/share/defliteam/git/install-or-update-interface.sh
 "
 
 INPUT_IP=$(echo $INPUT | cut -d: -f1)
@@ -408,7 +318,6 @@ This means you will need to install a stand-alone decoder so data are avaible on
 
 If you have the SDR connected to this device, we recommend using this script to install and configure a stand-alone decoder:
 
-https://github.com/wiedehopf/adsblol-scripts/wiki/Automatic-installation-for-readsb
 ---------------------
 "
 else
@@ -422,10 +331,10 @@ https://github.com/wiedehopf/adsblol-scripts/wiki/Automatic-installation-for-rea
 fi
 
 if ! timeout 5 nc -z "$INPUT_IP" "$INPUT_PORT" && command -v nc &>/dev/null; then
-    #whiptail --title "DeFli Setup Script" --msgbox "$ENDTEXT2" 24 73
+    #whiptail --title "adsb.lol Setup Script" --msgbox "$ENDTEXT2" 24 73
     echo -e "$ENDTEXT2"
 else
     # Display the thank you message box.
-    #whiptail --title "DeFli Setup Script" --msgbox "$ENDTEXT" 24 73
+    #whiptail --title "adsb.lol Setup Script" --msgbox "$ENDTEXT" 24 73
     echo -e "$ENDTEXT"
 fi
