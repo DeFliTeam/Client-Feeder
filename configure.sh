@@ -43,7 +43,7 @@ function abort() {
 
 ## WHIPTAIL DIALOGS
 
-BACKTITLETEXT="adsb.lol Setup Script"
+BACKTITLETEXT="DeFli Networks Setup Script"
 
 whiptail --backtitle "$BACKTITLETEXT" --title "$BACKTITLETEXT" --yesno "Thanks for choosing to share your data with defli!\n\ndelfi network uses your data to support infrastructure for unmanned aviation. This script will configure your current ADS-B receiver to share your feeders data with DeFli.\n\nWould you like to continue setup?" 13 78 || abort
 
