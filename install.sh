@@ -31,5 +31,5 @@ function getGIT() {
 
 getGIT "$REPO" "$BRANCH" "$IPATH/git"
 
-cd "$IPATH/git"
+cd "$IPATH/"
 bash "$IPATH/setup.sh"
