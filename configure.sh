@@ -111,7 +111,7 @@ if [[ $(hostname) == "radarcape" ]] || pgrep rcd &>/dev/null; then
     INPUT_TYPE="radarcape_gps"
 fi
 
-tee /etc/default/defliteam >/dev/null <<EOF
+tee /etc/default/defliteam >/dev/null
 INPUT="$INPUT"
 REDUCE_INTERVAL="0.5"
 
