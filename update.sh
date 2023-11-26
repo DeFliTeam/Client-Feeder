@@ -127,7 +127,7 @@ if [ -f /boot/defliteam-config.txt ]; then
 else
     source /etc/default/defliteam
     if ! grep -qs -e UAT_INPUT /etc/default/defliteam; then
-        cat >> /etc/default/adsblol <<"EOF"
+        cat >> /etc/default/adsblol 
 
 # this is the source for 978 data, use port 30978 from dump978 --raw-port
 # if you're not receiving 978, don't worry about it, not doing any harm!
